@@ -41,7 +41,7 @@ export function MushroomCard({ mushroom, index }: MushroomCardProps) {
 
   const handleOpenDetails = () => {
     router.push({
-      pathname: '/mushroom/[id]',
+      pathname: '../../app/mushroom/[id]',
       params: { id: mushroom.id },
     });
   };
@@ -92,7 +92,7 @@ export function MushroomCard({ mushroom, index }: MushroomCardProps) {
           <View style={styles.footerRow}>
             <EdibilityBadge edibility={mushroom.edibility} />
             <Text style={styles.traitText}>
-              {UNDER_CAP_LABELS[mushroom.underCap as keyof typeof UNDER_CAP_LABELS]}
+              {UNDER_CAP_LABELS[mushroom.underCap]}
             </Text>
           </View>
         </View>
