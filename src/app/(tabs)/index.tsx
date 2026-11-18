@@ -38,14 +38,19 @@ export default function AtlasScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.appTitle}>Grzybobranie</Text>
-        <Text style={styles.subtitle}>
-          Interaktywny atlas polskich grzybów • Tryb offline
-        </Text>
+        <View style={styles.topTitleRow}>
+          <View>
+            <Text style={styles.eyebrow}>Przewodnik terenowy • Offline</Text>
+            <Text style={styles.appTitle}>Grzybobranie</Text>
+          </View>
+          <View style={styles.headerBadgeCircle}>
+            <Ionicons name="leaf" size={20} color={COLORS.primary} />
+          </View>
+        </View>
 
 
         <View style={styles.searchBox}>
-          <Ionicons name="search" size={18} color={COLORS.textMuted} />
+          <Ionicons name="search-outline" size={18} color={COLORS.textSecondary} />
           <TextInput
             value={filters.searchQuery}
             onChangeText={setSearchQuery}
@@ -64,7 +69,7 @@ export default function AtlasScreen() {
               <Ionicons
                 name="close-circle"
                 size={18}
-                color={COLORS.textMuted}
+                color={COLORS.textSecondary}
               />
             </Pressable>
           )}
@@ -87,9 +92,10 @@ export default function AtlasScreen() {
         </ScrollView>
 
 
-        <Text style={styles.resultsCount}>
-          Znaleziono gatunków: {filteredMushrooms.length}
-        </Text>
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>Katalog gatunków</Text>
+          <Text style={styles.resultsCount}>{filteredMushrooms.length} pozycji</Text>
+        </View>
       </View>
 
 
@@ -103,16 +109,15 @@ export default function AtlasScreen() {
         )}
         ListEmptyComponent={
           <View style={styles.emptyBox}>
-            <Ionicons
-              name="leaf-outline"
-              size={40}
-              color={COLORS.textMuted}
-            />
+            <View style={styles.emptyIconCircle}>
+              <Ionicons name="leaf-outline" size={28} color={COLORS.primary} />
+            </View>
             <Text style={styles.emptyTitle}>Brak pasujących gatunków</Text>
             <Text style={styles.emptyText}>
               Spróbuj wpisać inną nazwę lub zmień kategorię filtrów.
             </Text>
             <Pressable style={styles.resetButton} onPress={resetFilters}>
+              <Ionicons name="refresh" size={16} color={COLORS.onPrimary} />
               <Text style={styles.resetButtonText}>Wyczyść filtry</Text>
             </Pressable>
           </View>
@@ -130,28 +135,44 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: SPACING.md,
-    paddingTop: SPACING.sm,
+    paddingTop: SPACING.sm + 2,
     paddingBottom: SPACING.xs,
+  },
+  topTitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  eyebrow: {
+    fontSize: FONT_SIZE.xs,
+    color: COLORS.textSecondary,
+    fontWeight: '500',
   },
   appTitle: {
     fontSize: FONT_SIZE.xl,
     fontWeight: '800',
-    color: COLORS.primary,
-  },
-  subtitle: {
-    fontSize: FONT_SIZE.xs,
-    color: COLORS.textSecondary,
+    color: COLORS.textPrimary,
     marginTop: 2,
+  },
+  headerBadgeCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.surfaceSubtle,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.md,
+    borderRadius: RADIUS.pill,
     borderWidth: 1,
     borderColor: COLORS.border,
-    paddingHorizontal: SPACING.sm + 4,
-    height: 46,
+    paddingHorizontal: SPACING.md,
+    height: 48,
     marginTop: SPACING.md,
     gap: SPACING.sm,
   },
@@ -162,28 +183,51 @@ const styles = StyleSheet.create({
   },
   chipsRow: {
     gap: SPACING.sm,
-    paddingVertical: SPACING.sm + 4,
+    paddingVertical: SPACING.md,
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.xs + 2,
+  },
+  sectionTitle: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
   },
   resultsCount: {
     fontSize: FONT_SIZE.xs,
-    fontWeight: '600',
-    color: COLORS.textSecondary,
-    marginBottom: SPACING.xs,
+    fontWeight: '700',
+    color: COLORS.primary,
   },
   listContent: {
     paddingHorizontal: SPACING.md,
-    paddingBottom: SPACING.xl,
+    paddingBottom: 116,
   },
   emptyBox: {
     alignItems: 'center',
-    paddingVertical: SPACING.xl * 1.5,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingVertical: SPACING.xl,
     paddingHorizontal: SPACING.lg,
+    marginTop: SPACING.md,
+  },
+  emptyIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.surfaceSubtle,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emptyTitle: {
     fontSize: FONT_SIZE.md,
     fontWeight: '700',
     color: COLORS.textPrimary,
-    marginTop: SPACING.sm,
+    marginTop: SPACING.md,
   },
   emptyText: {
     fontSize: FONT_SIZE.sm,
@@ -192,15 +236,18 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xs,
   },
   resetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     marginTop: SPACING.md,
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm + 2,
+    paddingVertical: SPACING.sm + 3,
     borderRadius: RADIUS.pill,
   },
   resetButtonText: {
-    color: COLORS.surface,
-    fontWeight: '700',
+    color: COLORS.onPrimary,
+    fontWeight: '800',
     fontSize: FONT_SIZE.sm,
   },
 });

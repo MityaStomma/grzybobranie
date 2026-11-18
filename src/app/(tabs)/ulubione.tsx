@@ -24,7 +24,19 @@ export default function UlubioneScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.title}>Ulubione gatunki</Text>
+        <View style={styles.topRow}>
+          <View>
+            <Text style={styles.eyebrow}>Kolekcja zapisana w telefonie</Text>
+            <Text style={styles.title}>Ulubione gatunki</Text>
+          </View>
+          <View style={styles.countCircle}>
+            <Text style={styles.countCircleText}>
+              {favoriteMushrooms.length}
+            </Text>
+          </View>
+        </View>
+
+
         <View style={styles.offlinePill}>
           <Ionicons
             name="cloud-offline-outline"
@@ -32,7 +44,7 @@ export default function UlubioneScreen() {
             color={COLORS.primary}
           />
           <Text style={styles.offlineText}>
-            Zapisano lokalnie w pamięci telefonu (100% offline)
+            Działa w 100% offline w głębi lasu
           </Text>
         </View>
       </View>
@@ -47,23 +59,26 @@ export default function UlubioneScreen() {
           <MushroomCard mushroom={item} index={index} />
         )}
         ListEmptyComponent={
-          <View style={styles.emptyBox}>
-            <Ionicons
-              name="heart-dislike-outline"
-              size={44}
-              color={COLORS.textMuted}
-            />
+          <View style={styles.emptyCard}>
+            <View style={styles.emptyIconCircle}>
+              <Ionicons
+                name="heart-outline"
+                size={28}
+                color={COLORS.primary}
+              />
+            </View>
             <Text style={styles.emptyTitle}>
-              Twój koszyk ulubionych jest jeszcze pusty
+              Twój koszyk ulubionych jest pusty
             </Text>
             <Text style={styles.emptyText}>
-              Kliknij ikonę serduszka przy wybranym grzybie w Atlasie, aby mieć
-              do niego szybki dostęp w lesie bez zasięgu.
+              Kliknij okrągłą ikonę serduszka przy wybranym grzybie w Atlasie,
+              aby zapisać go w pamięci telefonu.
             </Text>
             <Pressable
               style={styles.browseButton}
               onPress={() => router.navigate('/')}
             >
+              <Ionicons name="book-outline" size={18} color={COLORS.onPrimary} />
               <Text style={styles.browseButtonText}>Przejdź do Atlasu</Text>
             </Pressable>
           </View>
@@ -81,11 +96,37 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: SPACING.md,
-    paddingTop: SPACING.sm,
+    paddingTop: SPACING.sm + 2,
     paddingBottom: SPACING.sm + 4,
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  eyebrow: {
+    fontSize: FONT_SIZE.xs,
+    color: COLORS.textSecondary,
+    fontWeight: '500',
   },
   title: {
     fontSize: FONT_SIZE.xl,
+    fontWeight: '800',
+    color: COLORS.textPrimary,
+    marginTop: 2,
+  },
+  countCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.surfaceSubtle,
+    borderWidth: 1,
+    borderColor: COLORS.primaryBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  countCircleText: {
+    fontSize: FONT_SIZE.md,
     fontWeight: '800',
     color: COLORS.primary,
   },
@@ -95,10 +136,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     gap: 6,
     backgroundColor: COLORS.primaryLight,
-    paddingHorizontal: SPACING.sm + 2,
-    paddingVertical: SPACING.xs,
+    borderWidth: 1,
+    borderColor: COLORS.primaryBorder,
+    paddingHorizontal: SPACING.sm + 4,
+    paddingVertical: SPACING.xs + 1,
     borderRadius: RADIUS.pill,
-    marginTop: SPACING.xs + 2,
+    marginTop: SPACING.sm + 2,
   },
   offlineText: {
     fontSize: FONT_SIZE.xs,
@@ -107,15 +150,28 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: SPACING.md,
-    paddingBottom: SPACING.xl,
+    paddingBottom: 116,
   },
-  emptyBox: {
+  emptyCard: {
     alignItems: 'center',
-    paddingVertical: SPACING.xl * 1.8,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    borderWidth: 1,
+    borderColor: COLORS.primaryBorder,
+    paddingVertical: SPACING.xl,
     paddingHorizontal: SPACING.lg,
+    marginTop: SPACING.md,
+  },
+  emptyIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.surfaceSubtle,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emptyTitle: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.md + 1,
     fontWeight: '700',
     color: COLORS.textPrimary,
     marginTop: SPACING.md,
@@ -129,15 +185,18 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   browseButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
     marginTop: SPACING.lg,
     backgroundColor: COLORS.primary,
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: SPACING.lg + 4,
     paddingVertical: SPACING.sm + 4,
     borderRadius: RADIUS.pill,
   },
   browseButtonText: {
-    color: COLORS.surface,
+    color: COLORS.onPrimary,
     fontSize: FONT_SIZE.sm,
-    fontWeight: '700',
+    fontWeight: '800',
   },
 });

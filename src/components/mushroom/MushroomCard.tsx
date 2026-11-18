@@ -39,9 +39,17 @@ export function MushroomCard({ mushroom, index }: MushroomCardProps) {
   }));
 
 
+  const ringColor =
+    mushroom.edibility === 'edible'
+      ? COLORS.primary
+      : mushroom.edibility === 'poisonous'
+        ? COLORS.poisonousText
+        : COLORS.inedibleText;
+
+
   const handleOpenDetails = () => {
     router.push({
-      pathname: '../../app/mushroom/[id]',
+      pathname: '/mushroom/[id]',
       params: { id: mushroom.id },
     });
   };
@@ -62,38 +70,50 @@ export function MushroomCard({ mushroom, index }: MushroomCardProps) {
         }}
         style={styles.card}
       >
-        <Image source={mushroom.image} style={styles.thumbnail} />
+        <View style={[styles.avatarWrapper, { borderColor: ringColor }]}>
+          <Image source={mushroom.image} style={styles.thumbnail} />
+        </View>
 
 
         <View style={styles.content}>
           <View style={styles.topRow}>
-            <Text style={styles.title} numberOfLines={1}>
-              {mushroom.name}
-            </Text>
+            <View style={styles.titleBlock}>
+              <Text style={styles.title} numberOfLines={1}>
+                {mushroom.name}
+              </Text>
+              <Text style={styles.latinName} numberOfLines={1}>
+                {mushroom.latinName}
+              </Text>
+            </View>
+
+
             <Pressable
               onPress={() => toggleFavorite(mushroom.id)}
               hitSlop={10}
               accessibilityLabel="Dodaj do ulubionych"
+              style={[styles.heartCircle, favorite && styles.heartCircleActive]}
             >
               <Ionicons
                 name={favorite ? 'heart' : 'heart-outline'}
-                size={22}
-                color={favorite ? COLORS.favorite : COLORS.textMuted}
+                size={18}
+                color={favorite ? COLORS.onPrimary : COLORS.textSecondary}
               />
             </Pressable>
           </View>
 
 
-          <Text style={styles.latinName} numberOfLines={1}>
-            {mushroom.latinName}
-          </Text>
-
-
           <View style={styles.footerRow}>
             <EdibilityBadge edibility={mushroom.edibility} />
-            <Text style={styles.traitText}>
-              {UNDER_CAP_LABELS[mushroom.underCap]}
-            </Text>
+            <View style={styles.traitPill}>
+              <Text style={styles.traitText}>
+                {UNDER_CAP_LABELS[mushroom.underCap]}
+              </Text>
+              <Ionicons
+                name="chevron-forward"
+                size={14}
+                color={COLORS.textMuted}
+              />
+            </View>
           </View>
         </View>
       </Pressable>
@@ -105,19 +125,27 @@ export function MushroomCard({ mushroom, index }: MushroomCardProps) {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.md,
-    padding: SPACING.sm + 4,
+    padding: SPACING.sm + 6,
     marginBottom: SPACING.sm + 4,
     borderWidth: 1,
     borderColor: COLORS.border,
     ...CARD_SHADOW,
   },
-  thumbnail: {
-    width: 78,
-    height: 78,
-    borderRadius: RADIUS.sm + 2,
+  avatarWrapper: {
+    width: 68,
+    height: 68,
+    borderRadius: RADIUS.pill,
+    borderWidth: 2,
+    padding: 2,
     backgroundColor: COLORS.surfaceSubtle,
+  },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    borderRadius: RADIUS.pill,
   },
   content: {
     flex: 1,
@@ -127,11 +155,13 @@ const styles = StyleSheet.create({
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: SPACING.sm,
   },
-  title: {
+  titleBlock: {
     flex: 1,
+  },
+  title: {
     fontSize: FONT_SIZE.md,
     fontWeight: '700',
     color: COLORS.textPrimary,
@@ -142,11 +172,27 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     marginTop: 2,
   },
+  heartCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: RADIUS.pill,
+    backgroundColor: COLORS.surfaceSubtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heartCircleActive: {
+    backgroundColor: COLORS.primary,
+  },
   footerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: SPACING.sm,
+    marginTop: SPACING.sm + 2,
+  },
+  traitPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
   },
   traitText: {
     fontSize: FONT_SIZE.xs,

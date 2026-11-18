@@ -13,27 +13,15 @@ export default function RootLayout() {
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
         <FavoritesProvider>
-          <StatusBar style="dark" />
+          <StatusBar style="light" />
           <Stack
             screenOptions={{
-              headerStyle: { backgroundColor: COLORS.background },
-              headerTintColor: COLORS.primary,
-              headerTitleStyle: {
-                fontWeight: '700',
-                color: COLORS.textPrimary,
-              },
-              headerShadowVisible: false,
+              headerShown: false,
               contentStyle: { backgroundColor: COLORS.background },
             }}
           >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="mushroom/[id]"
-              options={{
-                title: 'Szczegóły gatunku',
-                headerBackTitle: 'Wróć',
-              }}
-            />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="mushroom/[id]" />
           </Stack>
         </FavoritesProvider>
       </SafeAreaProvider>
@@ -45,5 +33,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
 });

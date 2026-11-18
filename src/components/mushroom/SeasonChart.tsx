@@ -17,15 +17,21 @@ interface SeasonChartProps {
 
 
 export function SeasonChart({ seasonMonths }: SeasonChartProps) {
-  const chartWidth = 312;
-  const chartHeight = 76;
+  const chartWidth = 336;
+  const chartHeight = 64;
   const slotWidth = chartWidth / 12;
-  const barWidth = 18;
+  const pillWidth = 24;
+  const pillHeight = 54;
 
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Kalendarz występowania (sezon zbiorów)</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.heading}>Kalendarz zbiorów</Text>
+        <Text style={styles.countBadge}>
+          {seasonMonths.length} mies. w roku
+        </Text>
+      </View>
 
 
       <View style={styles.svgWrapper}>
@@ -37,30 +43,40 @@ export function SeasonChart({ seasonMonths }: SeasonChartProps) {
           {MONTH_SHORT_LABELS.map((monthLabel, idx) => {
             const monthNumber = idx + 1;
             const isActive = seasonMonths.includes(monthNumber);
-            const x = idx * slotWidth + (slotWidth - barWidth) / 2;
-            const barHeight = isActive ? 38 : 16;
-            const y = 46 - barHeight;
+            const x = idx * slotWidth + (slotWidth - pillWidth) / 2;
+            const centerX = idx * slotWidth + slotWidth / 2;
+            const numText = String(monthNumber).padStart(2, '0');
 
 
             return (
               <React.Fragment key={monthLabel}>
                 <Rect
                   x={x}
-                  y={y}
-                  width={barWidth}
-                  height={barHeight}
-                  rx={5}
+                  y={5}
+                  width={pillWidth}
+                  height={pillHeight}
+                  rx={12}
                   fill={isActive ? COLORS.primary : COLORS.surfaceSubtle}
                 />
                 <SvgText
-                  x={idx * slotWidth + slotWidth / 2}
-                  y={66}
-                  fontSize="10"
-                  fontWeight={isActive ? '700' : '400'}
-                  fill={isActive ? COLORS.primary : COLORS.textMuted}
+                  x={centerX}
+                  y={25}
+                  fontSize="8.5"
+                  fontWeight={isActive ? '700' : '500'}
+                  fill={isActive ? COLORS.onPrimary : COLORS.textSecondary}
                   textAnchor="middle"
                 >
                   {monthLabel}
+                </SvgText>
+                <SvgText
+                  x={centerX}
+                  y={44}
+                  fontSize="10"
+                  fontWeight={isActive ? '800' : '600'}
+                  fill={isActive ? COLORS.onPrimary : COLORS.textMuted}
+                  textAnchor="middle"
+                >
+                  {numText}
                 </SvgText>
               </React.Fragment>
             );
@@ -89,18 +105,28 @@ export function SeasonChart({ seasonMonths }: SeasonChartProps) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.md,
+    borderRadius: RADIUS.lg,
     padding: SPACING.md,
     borderWidth: 1,
     borderColor: COLORS.border,
     marginTop: SPACING.md,
     ...CARD_SHADOW,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
   heading: {
     fontSize: FONT_SIZE.md,
     fontWeight: '700',
     color: COLORS.textPrimary,
-    marginBottom: SPACING.sm,
+  },
+  countBadge: {
+    fontSize: FONT_SIZE.xs,
+    fontWeight: '700',
+    color: COLORS.primary,
   },
   svgWrapper: {
     alignItems: 'center',
@@ -109,7 +135,7 @@ const styles = StyleSheet.create({
   legendRow: {
     flexDirection: 'row',
     gap: SPACING.md,
-    marginTop: SPACING.xs,
+    marginTop: SPACING.xs + 2,
   },
   legendItem: {
     flexDirection: 'row',

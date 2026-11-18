@@ -47,8 +47,8 @@ export function FilterChip({ label, selected, onPress }: FilterChipProps) {
 
 const styles = StyleSheet.create({
   chip: {
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md + 2,
+    paddingVertical: SPACING.sm + 1,
     borderRadius: RADIUS.pill,
     backgroundColor: COLORS.surface,
     borderWidth: 1,
@@ -59,11 +59,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
   },
   label: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE.xs + 1,
     fontWeight: '600',
     color: COLORS.textSecondary,
   },
   labelSelected: {
-    color: COLORS.surface,
+    color: COLORS.onPrimary,
+    fontWeight: '800',
   },
 });

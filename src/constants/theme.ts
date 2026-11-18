@@ -2,29 +2,38 @@ import { ViewStyle } from 'react-native';
 
 
 export const COLORS = {
-  background: '#F6F5F0',
-  surface: '#FFFFFF',
-  surfaceSubtle: '#EFECE4',
-  primary: '#2D5A3C',
-  primaryLight: '#E3EFE7',
-  textPrimary: '#1C2621',
-  textSecondary: '#5C6B62',
-  textMuted: '#8A9990',
-  border: '#DCE3DE',
-  favorite: '#D93025',
+  background: '#0B110B',
+  surface: '#151E15',
+  surfaceElevated: '#1B261A',
+  surfaceSubtle: '#223021',
 
 
-  edibleBg: '#E6F4EA',
-  edibleText: '#137333',
+  primary: '#9EF01A',
+  onPrimary: '#0A110A',
+  primaryLight: 'rgba(158, 240, 26, 0.14)',
+  primaryBorder: 'rgba(158, 240, 26, 0.38)',
 
 
-  inedibleBg: '#FEF7E0',
-  inedibleText: '#B06000',
+  textPrimary: '#F4F7F3',
+  textSecondary: '#9BA999',
+  textMuted: '#697968',
+  border: '#253424',
+  favorite: '#9EF01A',
 
 
-  poisonousBg: '#FCE8E6',
-  poisonousText: '#C5221F',
-  poisonousBorder: '#F5B7B1',
+  edibleBg: 'rgba(158, 240, 26, 0.14)',
+  edibleText: '#A6F425',
+  edibleBorder: 'rgba(158, 240, 26, 0.34)',
+
+
+  inedibleBg: 'rgba(251, 191, 36, 0.14)',
+  inedibleText: '#FBBF24',
+  inedibleBorder: 'rgba(251, 191, 36, 0.34)',
+
+
+  poisonousBg: 'rgba(255, 92, 92, 0.14)',
+  poisonousText: '#FF6B6B',
+  poisonousBorder: 'rgba(255, 92, 92, 0.38)',
 } as const;
 
 
@@ -38,26 +47,26 @@ export const SPACING = {
 
 
 export const RADIUS = {
-  sm: 8,
-  md: 14,
-  lg: 20,
+  sm: 12,
+  md: 20,
+  lg: 26,
   pill: 999,
 } as const;
 
 
 export const FONT_SIZE = {
-xs: 12,
+  xs: 12,
   sm: 14,
   md: 16,
   lg: 20,
-  xl: 26,
+  xl: 28,
 } as const;
 
 
 export const CARD_SHADOW: ViewStyle = {
-  shadowColor: '#1C2621',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.06,
-  shadowRadius: 8,
-  elevation: 2,
+  shadowColor: '#000000',
+  shadowOffset: { width: 0, height: 8 },
+  shadowOpacity: 0.35,
+  shadowRadius: 16,
+  elevation: 6,
 };
